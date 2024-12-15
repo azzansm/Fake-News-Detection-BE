@@ -13,7 +13,7 @@ app = FastAPI()
 # Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Ensure this matches your frontend URL
+    allow_origins=["https://fake-news-detection-va.vercel.app"],  # Ensure this matches your frontend URL
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],  # Add OPTIONS for preflight
     allow_headers=["*"],
