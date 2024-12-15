@@ -13,11 +13,12 @@ app = FastAPI()
 # Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://fake-news-detection-va.vercel.app/"],  
+    allow_origins=["http://localhost:5173"],  # Ensure this matches your frontend URL
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],  # Add OPTIONS for preflight
     allow_headers=["*"],
 )
+
 
 # Define a request model for the predict endpoint
 class PredictRequest(BaseModel):
