@@ -1,7 +1,8 @@
-import pickle
+import gdown
 import tensorflow as tf
-import os
+import pickle
 import nltk
+import os
 from nltk.corpus import stopwords
 
 # Ensure stopwords are downloaded
@@ -18,6 +19,31 @@ def preprocess_text(text):
 
 # Ensure TensorFlow runs optimally
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
+# Function to download model files from Google Drive
+def download_model_from_drive(url, output_path):
+    gdown.download(url, output_path, quiet=False)
+
+# Download models
+models_info = [
+    {'path': 'gru_FINAL.h5', 'url': 'https://drive.google.com/uc?id=1oCsEJ-qM4gcp6rw6c_Ba-RxABr1l5zjr', 'name': 'GRU'},
+    {'path': 'bidir_FINAL.h5', 'url': 'https://drive.google.com/uc?id=1oCsEJ-qM4gcp6rw6c_Ba-RxABr1l5zjr', 'name': 'BiDir-LSTM-CNN'},
+    {'path': 'lstm_FINAL.h5', 'url': 'https://drive.google.com/uc?id=1g6M6k0NZV0oLaoQv18gI-kIg3h6W3rfG', 'name': 'LSTM'},
+    {'path': 'rnn_FINAL.h5', 'url': 'https://drive.google.com/uc?id=10n-UKAvadenFIgp6mP_9reOzcUTPzpQ6', 'name': 'RNN'},
+    {'path': 'coattention_FINAL.h5', 'url': 'https://drive.google.com/uc?id=1ptvlWduFp32iyr18D_O1lCMOvrm8He0i', 'name': 'Coattention'}
+]
+
+# Download and load models
+for model_info in models_info:
+    model_path = f"models/{model_info['path']}"
+    if not os.path.exists(model_path):
+        download_model_from_drive(model_info['url'], model_path)
+    try:
+        model = tf.keras.models.load_model(model_path)
+        model_info['model'] = model
+        print(f"Loaded model: {model_info['name']}")
+    except Exception as e:
+        print(f"Error loading model {model_info['name']}: {e}")
 
 # Load tokenizers
 with open('models/tokenizer_gru_FINAL.pkl', 'rb') as handle:
@@ -55,9 +81,7 @@ def predict_with_model(model, tokenizer, input_text, model_name):
     print(f"Raw output for {model_name}: {output.numpy()}")
 
     # Apply sigmoid to get the probability
-    # prediction = float(tf.sigmoid(output).numpy()[0][0])
     raw_score = float(output.numpy()[0][0])
-    # return prediction
     return raw_score
 
 def get_predictions(input_text):
@@ -72,7 +96,7 @@ def get_predictions(input_text):
     models = {}
     for model_info in models_info:
         try:
-            model = tf.keras.models.load_model(model_info['path'])
+            model = model_info.get('model')
             models[model_info['name']] = (model, model_info['tokenizer'])
         except Exception as e:
             print(f"Error loading {model_info['name']}: {e}")
