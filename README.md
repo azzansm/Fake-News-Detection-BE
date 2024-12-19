@@ -19,10 +19,7 @@ To get started, follow these simple steps:
 
 Once you've downloaded both folders, your folder structure should look like this:
 
-
-### Folder Structure Explanation:
-- The `frontend/` and `backend/` folders are **directly inside the root `project/` folder**.
-- The `docker-compose.yml` file is at the **same level** as `frontend/` and `backend/` (i.e., in the root of the `project/` folder).
+![image](https://github.com/user-attachments/assets/5c57905d-678f-4b6d-b3f8-3a7a5a4f8388)
 
 ### Step 3: Set Up Docker
 
