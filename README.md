@@ -2,6 +2,8 @@
 
 Welcome to the **Fake News Detection** project! 🎉
 
+This is Vania Agnes Djunaedy and Azza Nasima Final Project for AI, DS, RM ᯓ★
+
 This repository contains both the **frontend** and **backend** components needed to run the project. Before you can run the code, you will need to download a couple of files and set up the project folder structure.
 
 ## 🚀 Getting Started
@@ -21,10 +23,6 @@ Once you've downloaded both folders, your folder structure should look like this
 ### Folder Structure Explanation:
 - The `frontend/` and `backend/` folders are **directly inside the root `project/` folder**.
 - The `docker-compose.yml` file is at the **same level** as `frontend/` and `backend/` (i.e., in the root of the `project/` folder).
-  
-The structure will look like this:
-
-
 
 ### Step 3: Set Up Docker
 
