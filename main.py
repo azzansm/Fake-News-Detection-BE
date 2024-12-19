@@ -10,15 +10,24 @@ from utils.testing import get_predictions
 # FastAPI setup
 app = FastAPI()
 
-# Enable CORS for React frontend
+# Enable CORS for React frontend (allowing localhost, local network IP, and deployed frontend URL)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://fake-news-detection-va.vercel.app"],  # Ensure this matches your frontend URL
+    allow_origins=[
+        "http://localhost",  # Localhost for development
+        "http://localhost:80",  # Allow frontend running locally on port 80
+        "http://192.168.1.3",
+        "http://192.168.1.3:80", # Replace with your local network IP or use `*` for all IPs (less secure)
+        "https://fake-news-detection-va.vercel.app",
+        "http://192.168.56.1:80", 
+        "http://192.168.56.1",
+        "*",
+        # Production frontend URL (if applicable)
+    ],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],  # Add OPTIONS for preflight
+    allow_methods=["GET", "POST", "OPTIONS"],  # Allow specific methods
     allow_headers=["*"],
 )
-
 
 # Define a request model for the predict endpoint
 class PredictRequest(BaseModel):
@@ -69,3 +78,8 @@ async def predict(request: PredictRequest):
     except Exception as e:
         logging.error(f"Error during prediction: {e}")
         raise HTTPException(status_code=500, detail="Failed to process prediction request.")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
