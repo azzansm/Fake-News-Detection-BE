@@ -17,15 +17,13 @@ To get started, follow these simple steps:
 
 Once you've downloaded both folders, your folder structure should look like this:
 
-project/
-│
-├── frontend/         # All frontend-related code
-│   ├── [React, Vite files...]
-│
-├── backend/          # All backend-related code
-│   ├── [API, models, server files...]
-│
-└── docker-compose.yml  # Docker Compose file (at the root level)
+
+### Folder Structure Explanation:
+- The `frontend/` and `backend/` folders are **directly inside the root `project/` folder**.
+- The `docker-compose.yml` file is at the **same level** as `frontend/` and `backend/` (i.e., in the root of the `project/` folder).
+  
+The structure will look like this:
+
 
 
 ### Step 3: Set Up Docker
